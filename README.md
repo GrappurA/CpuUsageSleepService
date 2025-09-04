@@ -21,7 +21,8 @@
 2. Download the latest installer (`AutoSleepServiceSetup.exe`).
 3. Run the installer and follow the instructions.
 4. The app will be ready to run silently on Windows startup.
-5. Possibly configure it via CpuUsageConfig.json located at C:\ProgramData\CpuUsageSleep
+4.1. If the app is not starting go to Task Scheduler - Task Scheduler Library - double click CpuUsageSleep - Conditions - Uncheck everything - Save
+6. Possibly configure it via CpuUsageConfig.json located at C:\ProgramData\CpuUsageSleep
 
 ---
 
