@@ -17,7 +17,7 @@
 
 ### **Option 1: Install via Installer (Recommended)**
 
-1. Go to the [Releases](https://github.com/YourUsername/AutoSleepService/releases) tab.
+1. Go to the [Releases](https://github.com/GrappurA/CpuUsageSleepService/releases/) tab.
 2. Download the latest installer (`AutoSleepServiceSetup.exe`).
 3. Run the installer and follow the instructions.
 4. The app will be ready to run silently on Windows startup.
