@@ -23,12 +23,24 @@ namespace CpuUsageSleep
 			public int CheckIntervalSeconds { get; set; }
 			public int CpuUsageThreshold { get; set; }
 			public int IdleMinutesBeforeSleep { get; set; }
+			public bool UseRam { get; set; }
+			public int RamUsageThresholdGb { get; set; }
+			public bool UseBandwidth { get; set; }
+			public int BandwidthUsageThresholdKb { get; set; }
 
 			public ServiceConfig()
 			{
 				CheckIntervalSeconds = 10;
-				CpuUsageThreshold = 15;
 				IdleMinutesBeforeSleep = 15;
+
+				CpuUsageThreshold = 15;
+
+				UseRam = true;
+				RamUsageThresholdGb = 3;
+
+				UseBandwidth = true;
+				BandwidthUsageThresholdKb = 500;
+
 			}
 		}
 
@@ -50,6 +62,7 @@ namespace CpuUsageSleep
 
 				File.WriteAllText(configPath, json);
 			}
+
 			try
 			{
 				var serviceConfig = JsonSerializer.Deserialize<ServiceConfig>(File.ReadAllText(configPath));
@@ -98,21 +111,32 @@ namespace CpuUsageSleep
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
-			PerformanceCounter CpuUsage = new("Processor", "% Processor Time", "_Total");
-			CpuUsage.NextValue();
+			PerformanceCounter cpuCounter = new("Processor", "% Processor Time", "_Total");
+			PerformanceCounter ramCounter = new("Processor", "% Processor Time", "_Total");
+			PerformanceCounter bandwidthCounter = new("Processor", "% Processor Time", "_Total");
+
+			cpuCounter.NextValue();
+			ramCounter.NextValue();
+			bandwidthCounter.NextValue();
+
+			
 
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				_config = LoadConfig();
 				TimeSpan idleTime = GetIdleTime();
+
+				//logging
 				if (_logger.IsEnabled(LogLevel.Information))
 				{
 					_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 				}
 
-				int value = (int)CpuUsage.NextValue();
+				int cpuUsage = (int)cpuCounter.NextValue();
+				int ramUsage = (int)ramCounter.NextValue();
+				int bandwidthUsage = (int)bandwidthCounter.NextValue();//??
 
-				if (idleTime.TotalMinutes >= _config.IdleMinutesBeforeSleep && value < _config.CpuUsageThreshold)
+				if (idleTime.TotalMinutes >= _config.IdleMinutesBeforeSleep && cpuUsage < _config.CpuUsageThreshold)
 				{
 					//pc sleep logic
 					Console.BackgroundColor = ConsoleColor.Red;
@@ -122,14 +146,19 @@ namespace CpuUsageSleep
 
 				Console.Clear();
 				Console.WriteLine($"idle time: \t{idleTime.TotalSeconds}");
-				Console.WriteLine("Cpu Usage: \t" + value + "%");
-				_logger.LogInformation($"Idle time: {idleTime.TotalMinutes} minutes");
-				_logger.LogInformation($"Cpu Usage: {value}%");
+				Console.WriteLine("Cpu Usage: \t" + cpuUsage + "%");
+				_logger.LogInformation($"Idle time: {idleTime.TotalMinutes} minutes\n \"Cpu Usage: {cpuUsage}%");
 
 				//*1000 to convert to milliseconds
 				await Task.Delay(_config.CheckIntervalSeconds * 1000, stoppingToken);
 			}
 		}
+
+		//private bool IsUsingInternet()
+		//{
+		//	System.Net.NetworkInformation.IPv4InterfaceStatistics stats;
+		//	stats.
+		//}
 
 		private class PowerHelper
 		{
