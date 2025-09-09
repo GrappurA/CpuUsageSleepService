@@ -31,7 +31,7 @@ namespace CpuUsageSleep
 			.WriteTo.File(
 				logPath,
 				rollingInterval: RollingInterval.Day,  // new file each day
-				retainedFileCountLimit: 70,             // keep last 7 logs
+				retainedFileCountLimit: 10,             // keep last 7 logs
 				shared: true)
 			.CreateLogger();
 

@@ -1,26 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-CpuUsageSleep-cd994cd9-0f81-4a19-aff2-58f0ef16c6e6</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
-	      <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.8" />
-	      <PackageReference Include="Serilog" Version="4.3.0" />
-	      <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
-	      <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
-	      <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-	      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="9.0.8" />
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-CpuUsageSleep-cd994cd9-0f81-4a19-aff2-58f0ef16c6e6</UserSecretsId>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
 
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="9.0.8" />
+		<PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<PackageReference Include="System.Diagnostics.PerformanceCounter" Version="9.0.8" />
 
-  <ItemGroup>
-    <Reference Include="System.EnterpriseServices">
-      <HintPath>..\..\..\..\..\Windows\Microsoft.NET\Framework64\v2.0.50727\System.EnterpriseServices.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.EnterpriseServices">
+			<HintPath>..\..\..\..\..\Windows\Microsoft.NET\Framework64\v2.0.50727\System.EnterpriseServices.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>
