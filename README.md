@@ -6,7 +6,7 @@
 
 ## Features
 
-- Monitors CPU usage in the background.
+- Monitors CPU, RAM and bandwidth usage in the background.
 - Puts the PC to sleep after a configurable idle time.
 - Runs silently on logon (can be set up via Task Scheduler).
 - Lightweight and easy to install.
@@ -34,3 +34,9 @@ If you want to compile it yourself:
 
 ```bash
 git clone https://github.com/GrappurA/CpuUsageSleepService
+```
+---
+
+### **Updating Tutorial**
+
+Uninstall previous version, install newer one.
